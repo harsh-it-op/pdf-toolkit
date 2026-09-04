@@ -16,8 +16,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 
 import pdf_ops
+import rag
 from jobs import JobQueue, JobStore
-from storage import Storage
+
+from storage import Storage,LocalStorage, S3Storage
 from validation import (
     FileSizeError,
     InvalidPDFError,
@@ -35,7 +37,8 @@ MAX_UPLOAD = int(os.environ.get("PDFFORGE_MAX_UPLOAD_BYTES", str(100 * 1024 * 10
 MAX_PAGES = int(os.environ.get("PDFFORGE_MAX_PAGES", "2000"))
 CORS_ORIGINS = [o.strip() for o in os.environ.get("PDFFORGE_CORS_ORIGINS", "*").split(",")]
 JOB_TTL = int(os.environ.get("PDFFORGE_JOB_TTL_SECONDS", "3600"))
-
+REDIS_URL = os.environ.get("PDFFORGE_REDIS_URL", "")
+RATE_LIMIT_PER_MINUTE = int(os.environ.get("PDFFORGE_RATE_LIMIT", "60"))
 
 # --- app + state -------------------------------------------------------------
 
@@ -49,6 +52,7 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(title="PDFForge", version="0.1.0", lifespan=lifespan)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,

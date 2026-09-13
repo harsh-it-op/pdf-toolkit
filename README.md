@@ -10,7 +10,7 @@ This is an active build. **Phase 1 is functional today** — upload, compress, m
 |------:|-------|-------|
 | 1 | Project setup · Landing page · Tool cards · Upload · Compress · Merge · Split · Download | **Working** (backend + frontend) |
 | 2 | Rotate · Watermark · Page numbers · Organize · PDF ↔ JPG | working |
-| 3 | Edit · Annotations · Password · Unlock · Metadata · Crop | Pending |
+| 3 | Edit · Annotations · Password · Unlock · Metadata · Crop | WORKING |
 | 4 | OCR · DOCX/PPTX/XLSX conversion | Pending |
 | 5 | Auth · User dashboard · Pricing · Admin | Pending |
 | 6 | Production hardening · Rate limiting · Object storage · Workers · Monitoring | Pending |
